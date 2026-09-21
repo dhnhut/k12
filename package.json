@@ -1,0 +1,29 @@
+{
+  "name": "k12",
+  "private": true,
+  "description": "A K12 for Mathematics education platform",
+  "packageManager": "pnpm@12.5.1",
+  "engines": {
+    "node": ">=22.22.2",
+    "pnpm": ">=12.5.1"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint && prettier --check .",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "contracts:generate": "pnpm --filter @mathspark/contracts run generate",
+    "cdk": "pnpm --filter @mathspark/infra exec cdk",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.9.8",
+    "turbo": "2.11.2",
+    "typescript": "5.9.3"
+  },
+  "keywords": [],
+  "author": "Ned Duong",
+  "license": "ISC"
+}

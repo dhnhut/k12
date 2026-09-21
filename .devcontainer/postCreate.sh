@@ -3,9 +3,9 @@ set -euo pipefail
 
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
-echo "==> Enabling corepack and activating pnpm 9"
+echo "==> Enabling corepack and activating pnpm 12.5.1"
 corepack enable
-corepack prepare pnpm@9 --activate
+corepack prepare pnpm@12.5.1 --activate
 
 echo "==> Installing uv"
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -27,5 +27,7 @@ if [ -f services/agents/pyproject.toml ]; then
   echo "==> Syncing Python agent service dependencies"
   (cd services/agents && "$HOME/.local/bin/uv" sync)
 fi
+
+if [ -f pnpm-workspace.yaml ]; then pnpm install; fi
 
 echo "==> Dev container ready"

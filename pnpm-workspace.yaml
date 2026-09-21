@@ -1,0 +1,10 @@
+# pnpm 11+ reads settings from here, not package.json#pnpm.
+# If `pnpm install` ever reports "Ignored build scripts", allow them here:
+# allowBuilds:
+#   some-package: true
+
+packages:
+  - apps/*
+  - packages/*
+  - infra
+  # - services/* # for the latter Python sprint
