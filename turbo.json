@@ -3,7 +3,6 @@
   "tasks": {
     "build": { "dependsOn": ["^build"], "outputs": ["dist/**"] },
     "typecheck": { "dependsOn": ["^build"] },
-    "lint": {},
     "test": { "dependsOn": ["^build"] },
     "synth": { "dependsOn": ["^build"], "outputs": ["cdk.out/**"] },
     "dev": { "cache": false, "persistent": true }

@@ -1,4 +1,4 @@
-# MathSpark (working title)
+# K12 (working title)
 
 AI-generated, verified math exercises for K–12 learners.
 
@@ -54,20 +54,20 @@ Failed jobs go to a dead-letter queue and refund quota.
 
 ## Tech stack
 
-| Area | Choice | Why |
-|---|---|---|
-| Frontend | React + Vite, TypeScript, S3 + CloudFront | App sits behind login, so SSR adds friction without much benefit |
-| API | TypeScript on AWS Lambda, API Gateway (HTTP API) | Same language as frontend; shared types |
-| AI service | Python 3.12 on Amazon Bedrock AgentCore | SymPy for verification; Python-first agent and eval ecosystem |
-| Orchestration | Deterministic workflow (LangGraph or Strands) | Testable, debuggable, cheaper than free-form multi-agent |
-| Models | Amazon Bedrock, tiered small / large | Cost-aware routing |
-| Data | DynamoDB (single-table design) | Serverless, pay-per-request, conditional writes for quotas |
-| Retrieval | Metadata filtering + vectors (Bedrock Knowledge Bases) | Requests are mostly structured (grade, topic, standard) |
-| Auth | Amazon Cognito | Adult accounts only; child profiles stored in DynamoDB |
-| Payments | Stripe subscriptions + webhook Lambda | |
-| Infrastructure | AWS CDK (TypeScript) | Infrastructure as code, same language as API |
-| CI/CD | GitHub Actions with OIDC to AWS | No long-lived AWS keys |
-| Monorepo | pnpm workspaces + Turborepo; `uv` for Python | Python service is a sibling, wired into Turbo via thin scripts |
+| Area           | Choice                                                 | Why                                                              |
+| -------------- | ------------------------------------------------------ | ---------------------------------------------------------------- |
+| Frontend       | React + Vite, TypeScript, S3 + CloudFront              | App sits behind login, so SSR adds friction without much benefit |
+| API            | TypeScript on AWS Lambda, API Gateway (HTTP API)       | Same language as frontend; shared types                          |
+| AI service     | Python 3.12 on Amazon Bedrock AgentCore                | SymPy for verification; Python-first agent and eval ecosystem    |
+| Orchestration  | Deterministic workflow (LangGraph or Strands)          | Testable, debuggable, cheaper than free-form multi-agent         |
+| Models         | Amazon Bedrock, tiered small / large                   | Cost-aware routing                                               |
+| Data           | DynamoDB (single-table design)                         | Serverless, pay-per-request, conditional writes for quotas       |
+| Retrieval      | Metadata filtering + vectors (Bedrock Knowledge Bases) | Requests are mostly structured (grade, topic, standard)          |
+| Auth           | Amazon Cognito                                         | Adult accounts only; child profiles stored in DynamoDB           |
+| Payments       | Stripe subscriptions + webhook Lambda                  |                                                                  |
+| Infrastructure | AWS CDK (TypeScript)                                   | Infrastructure as code, same language as API                     |
+| CI/CD          | GitHub Actions with OIDC to AWS                        | No long-lived AWS keys                                           |
+| Monorepo       | pnpm workspaces + Turborepo; `uv` for Python           | Python service is a sibling, wired into Turbo via thin scripts   |
 
 ---
 
@@ -138,17 +138,17 @@ cp services/agents/.env.example services/agents/.env
 
 Run from the repo root unless noted.
 
-| Command | What it does |
-|---|---|
-| `pnpm dev` | Runs the web app and local API |
-| `pnpm build` | Builds all workspaces |
-| `pnpm lint` | ESLint + Prettier (TS), Ruff (Python) |
-| `pnpm typecheck` | `tsc --noEmit` (TS), mypy (Python) |
-| `pnpm test` | Vitest (TS) and pytest (Python) via Turbo |
-| `pnpm evals` | Runs the AI eval suite against the golden set |
-| `pnpm contracts:generate` | Regenerates types after changing a schema |
-| `pnpm cdk diff --context stage=dev` | Shows infrastructure changes |
-| `pnpm cdk deploy --context stage=dev` | Deploys to the dev account |
+| Command                               | What it does                                  |
+| ------------------------------------- | --------------------------------------------- |
+| `pnpm dev`                            | Runs the web app and local API                |
+| `pnpm build`                          | Builds all workspaces                         |
+| `pnpm lint`                           | ESLint + Prettier (TS), Ruff (Python)         |
+| `pnpm typecheck`                      | `tsc --noEmit` (TS), mypy (Python)            |
+| `pnpm test`                           | Vitest (TS) and pytest (Python) via Turbo     |
+| `pnpm evals`                          | Runs the AI eval suite against the golden set |
+| `pnpm contracts:generate`             | Regenerates types after changing a schema     |
+| `pnpm cdk diff --context stage=dev`   | Shows infrastructure changes                  |
+| `pnpm cdk deploy --context stage=dev` | Deploys to the dev account                    |
 
 Python-only, from `services/agents/`:
 
@@ -173,13 +173,13 @@ uv run python -m evals.run --suite golden
 
 ## Testing and evaluation
 
-| Layer | Tooling | Runs in CI |
-|---|---|---|
-| Unit | Vitest, pytest | Every PR |
-| Contract | Schema validation tests on both sides | Every PR |
-| Infrastructure | CDK assertions + snapshot tests | Every PR |
-| AI evals | Golden set: answer correctness (SymPy), schema validity, grade-level readability, cost and latency per exercise | Every PR touching `services/agents` |
-| End-to-end | Playwright against the dev stage | On merge to `main` |
+| Layer          | Tooling                                                                                                         | Runs in CI                          |
+| -------------- | --------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| Unit           | Vitest, pytest                                                                                                  | Every PR                            |
+| Contract       | Schema validation tests on both sides                                                                           | Every PR                            |
+| Infrastructure | CDK assertions + snapshot tests                                                                                 | Every PR                            |
+| AI evals       | Golden set: answer correctness (SymPy), schema validity, grade-level readability, cost and latency per exercise | Every PR touching `services/agents` |
+| End-to-end     | Playwright against the dev stage                                                                                | On merge to `main`                  |
 
 Eval results are reported per route tier so changes to routing can be judged on correctness **and** cost. A PR that lowers eval correctness below the threshold fails CI.
 
@@ -187,10 +187,10 @@ Eval results are reported per route tier so changes to routing can be judged on 
 
 ## Environments and deployment
 
-| Stage | AWS account | Deploys when |
-|---|---|---|
-| `dev` | dev | Manually, or on merge to `main` |
-| `prod` | prod | Tagged release after dev passes E2E |
+| Stage  | AWS account | Deploys when                        |
+| ------ | ----------- | ----------------------------------- |
+| `dev`  | dev         | Manually, or on merge to `main`     |
+| `prod` | prod        | Tagged release after dev passes E2E |
 
 GitHub Actions assumes a deploy role in each account through OIDC. There are no AWS access keys in the repository or in GitHub secrets.
 
@@ -212,10 +212,12 @@ GitHub Actions assumes a deploy role in each account through OIDC. There are no 
 This section is written for AI coding assistants as well as humans.
 
 **Before making changes**
+
 - Read the relevant workspace's code and any ADRs in `docs/adr/` that touch the area.
 - For cross-boundary changes, start in `packages/contracts`, regenerate types, then update both sides.
 
 **Rules**
+
 - Use `pnpm` for JS/TS and `uv` for Python. Do not use `npm`, `yarn`, `pip`, or `poetry`.
 - TypeScript is strict. Do not use `any`; validate external input with the generated Zod schemas.
 - Python code is fully type-hinted and passes `mypy` and `ruff`.

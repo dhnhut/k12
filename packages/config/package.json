@@ -1,0 +1,17 @@
+{
+  "name": "@k12/config",
+  "type": "module",
+  "private": true,
+  "version": "0.0.0",
+  "exports": {
+    "./tsconfig.base.json": "./tsconfig.base.json",
+    "./tsconfig.react.json": "./tsconfig.react.json",
+    "./eslint": "./eslint-preset.mjs"
+  },
+  "dependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint-config-prettier": "10.1.8",
+    "globals": "17.12.0",
+    "typescript-eslint": "8.70.0"
+  }
+}

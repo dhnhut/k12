@@ -10,15 +10,17 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint && prettier --check .",
+    "lint": "eslint . && prettier --check .",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
-    "contracts:generate": "pnpm --filter @mathspark/contracts run generate",
-    "cdk": "pnpm --filter @mathspark/infra exec cdk",
+    "contracts:generate": "pnpm --filter @k12/contracts run generate",
+    "cdk": "pnpm --filter @k12/infra exec cdk",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
   "devDependencies": {
+    "@k12/config": "workspace:*",
+    "eslint": "10.11.0",
     "prettier": "^3.9.8",
     "turbo": "2.11.2",
     "typescript": "5.9.3"
