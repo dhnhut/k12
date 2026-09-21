@@ -1,3 +1,15 @@
+# Agents
+CLAUDE.md
+
+# Project files
+.turbo/
+.vitest/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+*.local
+
 # Logs
 logs
 *.log

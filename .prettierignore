@@ -1,0 +1,7 @@
+pnpm-lock.yaml
+dist
+coverage
+.turbo
+.vitest
+apps/web/public/mockServiceWorker.js
+apps/web/src/components/ui
